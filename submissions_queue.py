@@ -21,7 +21,7 @@ for i in range(num_worker_threads):
     t.start()
 
 # Get submissions from source.
-for item in ["/home/coder/ozm/OSMWay26772773.osm", "/home/coder/ozm/OSMWay111610079.osm"]:
+for item in ["/home/coder/ozm/2_1530.osm", "/home/coder/ozm/3_3193.osm"]:
     q.put(item)
 
 q.join()  # block until all tasks are done
