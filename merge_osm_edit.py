@@ -5,6 +5,9 @@ from command_script import apply_changeset_to_db
 
 
 def replace_osm_with_osmchange(filedata):
+    #If the file is already osmChange return.
+    if re.search('<osmChange.*?>', filedata):
+        return filedata
     m = re.search('<osm.*?>', filedata)
     osm_tag = m.group(0)
     print "OSM tag " + osm_tag

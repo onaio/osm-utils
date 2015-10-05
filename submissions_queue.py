@@ -2,18 +2,35 @@ from Queue import Queue
 import os
 from threading import Thread
 from merge_osm_edit import process_submission
+from pull_osm import pull_osm_files
 from push_osm import push_osm_files
+from timestamp_and_version import add_timestamp_and_version
 
 __author__ = 'coder'
+
+op = input("Enter the # operation 1: Push OSM 2: Pull OSM 3. Apply Changeset to DB")
+database = input("Enter the database name")
+host = input("Enter the host address")
+user = input("Enter database username")
+password = input("Enter the database password")
 
 path = '/Users/onake/Documents/osm'
 
 def worker():
     while True:
-        item = q.get()
-        #push_osm_files(item)
-        process_submission(item)
+        filename = q.get()
+        # Add version and timestamp to all nodes
+        item = add_timestamp_and_version(filename)
+        if op == 1:
+            #push_osm_files(item)
+            push_osm_files(item)
+        elif op == 2:
+            pull_osm_files(item)
+        elif op == 3:
+            process_submission(item)
         q.task_done()
+
+
 
 
 q = Queue()
